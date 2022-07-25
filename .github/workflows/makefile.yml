@@ -1,0 +1,27 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "lineage-19.1" ]
+  pull_request:
+    branches: [ "lineage-19.1" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: configure
+      run: ./android_kernel_xiaomi_sm8250/arch/arm64/configs/defconfig
+      
+    - name: Install dependencies
+      run: make
+      
+    - name: Run check
+      run: make check
+      
+    - name: Run distcheck
+      run: make distcheck
